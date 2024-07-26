@@ -1,19 +1,28 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import gi from '../assets/giventures.png';
 import nv from '../assets/nvidia-partner.png';
 
 const HomeComponent = () => {
     // Sample data
-    const [data, setData] = useState([
-        { id: 1, guestId: 'G123', name: 'John Doe', flightNo: 'FL123', boarded: false, roomNo: '101', checkIn: false, checkOut: false },
-        { id: 2, guestId: 'G124', name: 'Jane Smith', flightNo: 'FL124', boarded: true, roomNo: '102', checkIn: true, checkOut: false },
-        { id: 3, guestId: 'G125', name: 'Sam Brown', flightNo: 'FL125', boarded: false, roomNo: '103', checkIn: false, checkOut: true }
-    ]);
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(false)
 
     // State to track which row is in edit mode
     const [editRowId, setEditRowId] = useState(null);
 
+    const getData = async () => {
+        setLoading(true)
+        const data = await fetch('http://localhost:8000/user/getData')
+        const response = await data.json()
+        console.log(response)
+        setData(response.data)
+        setLoading(false)
+    }
+
+    useEffect(() => {
+        getData()
+    }, [])
     // Handle checkbox changes
     const handleCheckboxChange = (id, field) => {
         setData(prevData =>
@@ -37,7 +46,7 @@ const HomeComponent = () => {
         if (editRowId === id) {
             // Save changes
             console.log('Updated Data:', data.find(item => item.id === id)); // Log updated data
-            alert(JSON.stringify(data.find(item => item.id === id), null, 2)); // Display data in alert
+            // alert(JSON.stringify(data.find(item => item.id === id), null, 2)); // Display data in alert
             setEditRowId(null);
         } else {
             // Enter edit mode
@@ -46,7 +55,7 @@ const HomeComponent = () => {
     };
 
     return (
-        <>
+        !data ? <>loading</> : <>
             <header>
                 <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
                     <div className="container-fluid">
@@ -87,9 +96,9 @@ const HomeComponent = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {data.map(item => (
+                        {data.map((item, index) => (
                             <tr key={item.id}>
-                                <td>{item.id}</td>
+                                <td>{index}</td>
                                 <td>{item.guestId}</td>
                                 <td>{item.name}</td>
                                 <td>{item.flightNo}</td>

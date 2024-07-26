@@ -27,7 +27,7 @@ const HomeComponent = () => {
     const handleCheckboxChange = (id, field) => {
         setData(prevData =>
             prevData.map(item =>
-                item.id === id ? { ...item, [field]: !item[field] } : item
+                item.Id === id ? { ...item, [field]: item[field] === 0 ? 1 : 0 } : item
             )
         );
     };
@@ -36,7 +36,7 @@ const HomeComponent = () => {
     const handleRoomNoChange = (id, newRoomNo) => {
         setData(prevData =>
             prevData.map(item =>
-                item.id === id ? { ...item, roomNo: newRoomNo } : item
+                item.Id === id ? { ...item, RoomNo: newRoomNo } : item
             )
         );
     };
@@ -45,8 +45,8 @@ const HomeComponent = () => {
     const toggleEditMode = (id) => {
         if (editRowId === id) {
             // Save changes
-            console.log('Updated Data:', data.find(item => item.id === id)); // Log updated data
-            // alert(JSON.stringify(data.find(item => item.id === id), null, 2)); // Display data in alert
+            console.log('Updated Data:', data.find(item => item.Id === id)); // Log updated data
+            alert(JSON.stringify(data.find(item => item.Id === id), null, 2)); // Display data in alert
             setEditRowId(null);
         } else {
             // Enter edit mode
@@ -85,9 +85,9 @@ const HomeComponent = () => {
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>GuestID</th>
+                            <th>Guest ID</th>
                             <th>Name</th>
-                            <th>FlightNo</th>
+                            <th>Flight No</th>
                             <th>Boarded</th>
                             <th>Room No</th>
                             <th>Check In</th>
@@ -97,42 +97,42 @@ const HomeComponent = () => {
                     </thead>
                     <tbody>
                         {data.map((item, index) => (
-                            <tr key={item.id}>
+                            <tr key={item.IDDetId}>
                                 <td>{index}</td>
-                                <td>{item.guestId}</td>
-                                <td>{item.name}</td>
-                                <td>{item.flightNo}</td>
+                                <td>{item.GuestId}</td>
+                                <td>{item.Name}</td>
+                                <td>{item.FlightNo}</td>
                                 <td>
                                     <input
                                         type="checkbox"
-                                        checked={item.boarded}
-                                        onChange={() => handleCheckboxChange(item.id, 'boarded')}
-                                        disabled={editRowId !== item.id} // Disable if not in edit mode
+                                        checked={item.Boarded === 1}
+                                        onChange={() => handleCheckboxChange(index, 'Boarded')}
+                                        disabled={editRowId !== index} // Disable if not in edit mode
                                     />
                                 </td>
                                 <td>
                                     <input
                                         type="text"
-                                        value={item.roomNo}
-                                        onChange={(e) => handleRoomNoChange(item.id, e.target.value)}
+                                        value={item.RoomNo}
+                                        onChange={(e) => handleRoomNoChange(index, e.target.value)}
                                         className="form-control"
-                                        disabled={editRowId !== item.id} // Enable only if editing
+                                        disabled={editRowId !== index} // Enable only if editing
                                     />
                                 </td>
                                 <td>
                                     <input
                                         type="checkbox"
-                                        checked={item.checkIn}
-                                        onChange={() => handleCheckboxChange(item.id, 'checkIn')}
-                                        disabled={editRowId !== item.id} // Disable if not in edit mode
+                                        checked={item.CheckIn === 1}
+                                        onChange={() => handleCheckboxChange(index, 'CheckIn')}
+                                        disabled={editRowId !== index} // Disable if not in edit mode
                                     />
                                 </td>
                                 <td>
                                     <input
                                         type="checkbox"
-                                        checked={item.checkOut}
-                                        onChange={() => handleCheckboxChange(item.id, 'checkOut')}
-                                        disabled={editRowId !== item.id} // Disable if not in edit mode
+                                        checked={item.CheckOut === 1}
+                                        onChange={() => handleCheckboxChange(index, 'CheckOut')}
+                                        disabled={editRowId !== index} // Disable if not in edit mode
                                     />
                                 </td>
                                 <td>
@@ -142,9 +142,9 @@ const HomeComponent = () => {
                                             backgroundColor: '#76B900', // Background color
                                             color: '#FFFFFF',            // Text color
                                         }}
-                                        onClick={() => toggleEditMode(item.id)}
+                                        onClick={() => toggleEditMode(index)}
                                     >
-                                        {editRowId === item.id ? 'Save' : 'Edit'}
+                                        {editRowId === index ? 'Save' : 'Edit'}
                                     </button>
                                 </td>
                             </tr>

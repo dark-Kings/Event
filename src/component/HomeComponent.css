@@ -2,10 +2,6 @@
     .custom-style {
         flex-direction: column;
     }
-
-    .custom-cardStyle {
-        flex-direction: column;
-    }
 }
 
 @media (max-width: 299px) {

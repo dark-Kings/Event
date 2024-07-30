@@ -368,43 +368,43 @@ const HomeComponent = () => {
                                             className="form-control"
                                         />
                                     </div>
-                                    <div className='d-flex p-0 justify-content-around'>
-                                    <div className="col-md-6 mb-3">
-                                        <div className="form-check">
-                                            <input
-                                                className="form-check-input"
-                                                type="checkbox"
-                                                id={`boarded${item.IDDetID}`}
-                                                checked={item.Boarded === 1}
-                                                onChange={() => handleCheckboxChange(item.IDDetID, 'Boarded')}
-                                            />
-                                            <label className="form-check-label" htmlFor={`boarded${item.IDDetID}`}>Boarded</label>
+                                    <div className='d-flex p-0 justify-content-around custom-cardStyle'>
+                                        <div className="col-md-6 mb-3">
+                                            <div className="form-check">
+                                                <input
+                                                    className="form-check-input"
+                                                    type="checkbox"
+                                                    id={`boarded${item.IDDetID}`}
+                                                    checked={item.Boarded === 1}
+                                                    onChange={() => handleCheckboxChange(item.IDDetID, 'Boarded')}
+                                                />
+                                                <label className="form-check-label" htmlFor={`boarded${item.IDDetID}`}>Boarded</label>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="col-md-6 mb-3 ms-1 me-1">
-                                        <div className="form-check">
-                                            <input
-                                                className="form-check-input"
-                                                type="checkbox"
-                                                id={`checkIn${item.IDDetID}`}
-                                                checked={item.CheckIN === 1}
-                                                onChange={() => handleCheckboxChange(item.IDDetID, 'CheckIN')}
-                                            />
-                                            <label className="form-check-label" htmlFor={`checkIn${item.IDDetID}`}>Check In</label>
+                                        <div className="col-md-6 mb-3 ms-1 me-1">
+                                            <div className="form-check">
+                                                <input
+                                                    className="form-check-input"
+                                                    type="checkbox"
+                                                    id={`checkIn${item.IDDetID}`}
+                                                    checked={item.CheckIN === 1}
+                                                    onChange={() => handleCheckboxChange(item.IDDetID, 'CheckIN')}
+                                                />
+                                                <label className="form-check-label" htmlFor={`checkIn${item.IDDetID}`}>Check In</label>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="col-md-6 mb-3">
-                                        <div className="form-check">
-                                            <input
-                                                className="form-check-input"
-                                                type="checkbox"
-                                                id={`checkOut${item.IDDetID}`}
-                                                checked={item.CheckOut === 1}
-                                                onChange={() => handleCheckboxChange(item.IDDetID, 'CheckOut')}
-                                            />
-                                            <label className="form-check-label" htmlFor={`checkOut${item.IDDetID}`}>Check Out</label>
+                                        <div className="col-md-6 mb-3">
+                                            <div className="form-check">
+                                                <input
+                                                    className="form-check-input"
+                                                    type="checkbox"
+                                                    id={`checkOut${item.IDDetID}`}
+                                                    checked={item.CheckOut === 1}
+                                                    onChange={() => handleCheckboxChange(item.IDDetID, 'CheckOut')}
+                                                />
+                                                <label className="form-check-label" htmlFor={`checkOut${item.IDDetID}`}>Check Out</label>
+                                            </div>
                                         </div>
-                                    </div>
                                     </div>
                                 </div>
                             </div>

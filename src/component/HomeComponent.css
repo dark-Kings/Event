@@ -2,8 +2,17 @@
     .custom-style {
         flex-direction: column;
     }
+
+    .custom-cardStyle {
+        flex-direction: column;
+    }
 }
 
+@media (max-width: 299px) {
+    .custom-cardStyle {
+        flex-direction: column;
+    }
+}
 
 /* Add this to your custom CSS file if needed */
 .card-custom {
@@ -25,7 +34,8 @@
 
 .phone-number {
     text-decoration: none;
-    color: #007bff; /* Change this to the color you want */
+    color: #007bff;
+    /* Change this to the color you want */
 }
 
 .phone-number:hover {

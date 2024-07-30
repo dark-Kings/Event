@@ -3,3 +3,31 @@
         flex-direction: column;
     }
 }
+
+
+/* Add this to your custom CSS file if needed */
+.card-custom {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.card-custom:hover {
+    transform: translateY(-5px);
+}
+
+.img-thumbnail-custom {
+    width: 110px;
+    height: 110px;
+    margin-right: 15px;
+    border-radius: 50%;
+}
+
+.phone-number {
+    text-decoration: none;
+    color: #007bff; /* Change this to the color you want */
+}
+
+.phone-number:hover {
+    text-decoration: underline;
+}

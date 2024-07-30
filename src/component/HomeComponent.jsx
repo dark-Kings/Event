@@ -331,27 +331,32 @@ const HomeComponent = () => {
                 </div>
                 <div className="d-md-none">
                     {filteredData.map((item) => (
-                        <div key={item.IDDetID} className="card mb-4" style={{ width: '100%' }}>
+                        <div key={item.IDDetID} className="card card-custom mb-4" style={{ width: '100%' }}>
                             <div className="card-body">
-                                <div className="d-flex  align-items-center mb-3">
+                                <div className="d-flex align-items-center mb-3">
                                     <div>
                                         <img
                                             src={getImageSrc(item.Picture)}
                                             alt="User Photo"
-                                            className="img-thumbnail"
-                                            style={{ width: '110px', height: '110px', marginRight: '15px' }}
+                                            className="img-thumbnail img-thumbnail-custom"
                                             onError={(e) => { e.target.src = user; }} // Set the default image on error
                                         />
                                     </div>
-                                    <div className='d-ms-ms-5'>
+                                    <div className='ms-3'>
+                                        <h5 className="card-title">{item.Name}</h5>
                                         <p className="card-text">Guest ID: {item.GuestId}</p>
-                                        <p className="card-text">Name: {item.Name}</p>
                                         <p className="card-text">Flight No: {item.FlightNo}</p>
                                         <p className="card-text">PAX NO: {item.PaxNo}</p>
+                                        <p className="card-text">
+                                            Phone:&nbsp;
+                                            <a href={`tel:${item.Phone}`} className="phone-number">
+                                                {item.Phone}8077664702
+                                            </a>
+                                        </p>
                                     </div>
                                 </div>
-                                <div className="row">
-                                    <div className="col-6 mb-2">
+                                <div className="row ">
+                                    <div className="col-md-6 mb-3">
                                         <label className="form-label" htmlFor={`roomNo${item.IDDetID}`}>Room No</label>
                                         <input
                                             type="text"
@@ -362,9 +367,9 @@ const HomeComponent = () => {
                                             className="form-control"
                                         />
                                     </div>
-                                    <div className="col-6 mb-2">
+                                    <div className='d-flex p-0 justify-content-around'>
+                                    <div className="col-md-6 mb-3">
                                         <div className="form-check">
-                                            <label className="form-check-label" htmlFor={`boarded${item.IDDetID}`}>Boarded</label>
                                             <input
                                                 className="form-check-input"
                                                 type="checkbox"
@@ -372,11 +377,11 @@ const HomeComponent = () => {
                                                 checked={item.Boarded === 1}
                                                 onChange={() => handleCheckboxChange(item.IDDetID, 'Boarded')}
                                             />
+                                            <label className="form-check-label" htmlFor={`boarded${item.IDDetID}`}>Boarded</label>
                                         </div>
                                     </div>
-                                    <div className="col-6 mb-2">
+                                    <div className="col-md-6 mb-3 ms-1 me-1">
                                         <div className="form-check">
-                                            <label className="form-check-label" htmlFor={`checkIn${item.IDDetID}`}>Check In</label>
                                             <input
                                                 className="form-check-input"
                                                 type="checkbox"
@@ -384,11 +389,11 @@ const HomeComponent = () => {
                                                 checked={item.CheckIN === 1}
                                                 onChange={() => handleCheckboxChange(item.IDDetID, 'CheckIN')}
                                             />
+                                            <label className="form-check-label" htmlFor={`checkIn${item.IDDetID}`}>Check In</label>
                                         </div>
                                     </div>
-                                    <div className="col-6 mb-2">
+                                    <div className="col-md-6 mb-3">
                                         <div className="form-check">
-                                            <label className="form-check-label" htmlFor={`checkOut${item.IDDetID}`}>Check Out</label>
                                             <input
                                                 className="form-check-input"
                                                 type="checkbox"
@@ -396,11 +401,14 @@ const HomeComponent = () => {
                                                 checked={item.CheckOut === 1}
                                                 onChange={() => handleCheckboxChange(item.IDDetID, 'CheckOut')}
                                             />
+                                            <label className="form-check-label" htmlFor={`checkOut${item.IDDetID}`}>Check Out</label>
                                         </div>
+                                    </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                     ))}
                 </div>
             </main>

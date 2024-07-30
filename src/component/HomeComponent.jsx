@@ -291,7 +291,8 @@ const HomeComponent = () => {
                                         />
                                     </td>
                                     <td>{item.GuestId}</td>
-                                    <td>{item.Name}</td>
+                                    <td>{item.Name}<br /><a href={`tel:${item.Phone}`} style={{ textDecoration: 'none', color: 'blue' }}>
+                                        {item.Phone}8869854199</a></td>
                                     <td>{item.FlightNo}</td>
                                     <td>
                                         <input

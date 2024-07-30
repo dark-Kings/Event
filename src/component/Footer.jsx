@@ -1,5 +1,5 @@
 import React from 'react';
-import gi from '../assets/giventures.png';
+import gi from './giventures.png';
 
 const Footer = () => {
     const scrollToTop = () => {

@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import nv from '../assets/nvidia-partner.png';
-import imageStrip from '../assets/unnamed.jpg'
+import nv from './nvidia-partner.png';
+import imageStrip from './unnamed.jpg'
 import { useLocation } from 'react-router-dom';
 import './HomeComponent.css'
-import user from '../assets/User.jpg'
+import user from './User.jpg'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -71,6 +71,7 @@ const HomeComponent = () => {
 
     useEffect(() => {
         getData()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const updateData = (updatedItem, message) => {
@@ -101,7 +102,7 @@ const HomeComponent = () => {
                         progress: undefined,
                         theme: "light",
                     });
-                    getData();
+                    // getData();
                 } else {
                     throw new Error('Failed to update data');
                 }

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import posterImage from '../assets/banner.jpg';
+import posterImage from './banner.jpg';
 
 const LoginComponent = () => {
     const [username, setUsername] = useState('');

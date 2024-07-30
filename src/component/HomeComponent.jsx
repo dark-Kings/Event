@@ -64,7 +64,7 @@ const HomeComponent = () => {
             .catch(error => {
                 setLoading(false);
                 console.error('Error fetching data:', error);
-                alert("Something went wrong. Please try again.");
+                // alert("Something went wrong. Please try again.");
             });
     };
 
@@ -90,7 +90,7 @@ const HomeComponent = () => {
             })
             .then(result => {
                 if (result) {
-                    alert(message);
+                    // alert(message);
                     toast(message, {
                         position: "top-center",
                         autoClose: 3000,
@@ -108,7 +108,7 @@ const HomeComponent = () => {
             })
             .catch(error => {
                 console.error('Error updating data:', error);
-                alert("Something went wrong. Please try again.");
+                // alert("Something went wrong. Please try again.");
             })
             .finally(() => {
                 setLoading(false);

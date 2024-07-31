@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import nv from './nvidia-partner.png';
-import imageStrip from './unnamed.jpg'
+import imageStrip from './unnamed.jpg';
 import { useLocation } from 'react-router-dom';
-import './HomeComponent.css'
-import user from './User.jpg'
+import './HomeComponent.css';
+import user from './User.jpg';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -14,13 +14,11 @@ const HomeComponent = () => {
     const [loading, setLoading] = useState(false);
     const [groupedData, setGroupedData] = useState({});
     const [selectedFlightNo, setSelectedFlightNo] = useState('');
+    const [selectedBoardingStatus, setSelectedBoardingStatus] = useState('');
     const location = useLocation();
     const { username } = location.state || {};
-    // console.log(username)
 
-    const BASE_URL = import.meta.env.VITE_API_URL
-
-
+    const BASE_URL = import.meta.env.VITE_API_URL;
 
     const getData = () => {
         setLoading(true);
@@ -29,7 +27,7 @@ const HomeComponent = () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify([{}])
+            body: JSON.stringify([{}]),
         })
             .then(response => {
                 if (!response.ok) {
@@ -38,7 +36,6 @@ const HomeComponent = () => {
                 return response.json();
             })
             .then(e => {
-                // Ensure e is a valid JSON string
                 try {
                     return JSON.parse(e);
                 } catch {
@@ -64,24 +61,21 @@ const HomeComponent = () => {
             .catch(error => {
                 setLoading(false);
                 console.error('Error fetching data:', error);
-                // alert("Something went wrong. Please try again.");
             });
     };
 
-
     useEffect(() => {
-        getData()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+        getData();
+    }, []);
 
     const updateData = (updatedItem, message) => {
         setLoading(true);
         fetch(BASE_URL, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(updatedItem)
+            body: JSON.stringify(updatedItem),
         })
             .then(response => {
                 if (!response.ok) {
@@ -91,7 +85,6 @@ const HomeComponent = () => {
             })
             .then(result => {
                 if (result) {
-                    // alert(message);
                     toast(message, {
                         position: "top-center",
                         autoClose: 3000,
@@ -102,21 +95,17 @@ const HomeComponent = () => {
                         progress: undefined,
                         theme: "light",
                     });
-                    // getData();
                 } else {
                     throw new Error('Failed to update data');
                 }
             })
             .catch(error => {
                 console.error('Error updating data:', error);
-                // alert("Something went wrong. Please try again.");
             })
             .finally(() => {
                 setLoading(false);
             });
     };
-
-
 
     const handleCheckboxChange = (id, field) => {
         const updatedData = data.map((item) =>
@@ -138,7 +127,7 @@ const HomeComponent = () => {
             FieldName: field,
             FieldValue: `${updatedItem[field]}`
         }];
-        const message = field === 'Boarded' ? `ID: ${updatedItem["GuestId"]} Boarded` : field === 'CheckIN' ? `ID: ${updatedItem["GuestId"]} Check-In Completed` : `ID: ${updatedItem["GuestId"]}Check-Out Completed`;
+        const message = field === 'Boarded' ? `ID: ${updatedItem["GuestId"]} Boarded` : field === 'CheckIN' ? `ID: ${updatedItem["GuestId"]} Check-In Completed` : `ID: ${updatedItem["GuestId"]} Check-Out Completed`;
         updateData(serverData, message);
     };
 
@@ -158,7 +147,6 @@ const HomeComponent = () => {
         setGroupedData(updatedGroupedData);
     };
 
-
     const handleRoomNoBlur = (id) => {
         const updatedItem = data.find((item) => item.IDDetID === id);
         const serverData = [{
@@ -174,7 +162,16 @@ const HomeComponent = () => {
         setSelectedFlightNo(event.target.value);
     };
 
-    const filteredData = selectedFlightNo === 'All' ? data : selectedFlightNo ? groupedData[selectedFlightNo] : data;
+    const handleBoardingStatusChange = (event) => {
+        setSelectedBoardingStatus(event.target.value);
+    };
+
+    const filteredData = data
+        .filter(item => selectedFlightNo === 'All' || item.FlightNo === selectedFlightNo)
+        .filter(item => {
+            if (selectedBoardingStatus === '') return true;
+            return selectedBoardingStatus === 'Boarded' ? item.Boarded === 1 : item.Boarded === 0;
+        });
 
     const getImageSrc = (base64String) => {
         try {
@@ -185,8 +182,8 @@ const HomeComponent = () => {
                 return `data:${mimeType};base64,${base64String}`;
             }
         } catch (error) {
-            console.log(error)
-            return base64String
+            console.log(error);
+            return base64String;
         }
     };
 
@@ -204,6 +201,11 @@ const HomeComponent = () => {
     const totalCheckOut = data.filter(item => item.CheckOut === 1).length;
     const totalGotHotel = data.filter(item => item.RoomNo).length;
     const totalNotGotHotel = data.length - totalGotHotel;
+
+    // Calculate the total unique room count
+    const roomNumbers = data.map(item => item.RoomNo.trim().replace(/\s+/g, '')); // Trim and replace multiple spaces with a single space
+    const uniqueRoomNumbers = new Set(roomNumbers);
+    const totalRoom = uniqueRoomNumbers.size - 1;
 
     return (
         <>
@@ -241,7 +243,7 @@ const HomeComponent = () => {
                             </tbody>
                         </table>
                     </div>
-                    <div className="mt-4 d-flex justify-content-around w-100" style={{ marginLeft: '10px' }}>
+                    <div className="mt-4 d-flex justify-content-around w-100 custom-cardStyle" style={{ marginLeft: '10px' }}>
                         <div>
                             <p><strong>Check-ins &nbsp;&nbsp;&nbsp;:</strong> <strong>{totalCheckIn}</strong></p>
                             <p><strong>Check-outs&nbsp;:</strong> <strong>{totalCheckOut}</strong></p>
@@ -250,17 +252,28 @@ const HomeComponent = () => {
                             <p><strong>Hotel Allotted&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong> <strong>{totalGotHotel}</strong></p>
                             <p><strong>Hotel Unallotted&nbsp;:</strong> <strong>{totalNotGotHotel}</strong></p>
                         </div>
+                        <div>
+                            <p><strong>Room Allotted&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong> <strong>{totalRoom}</strong></p>
+                        </div>
                     </div>
                 </div>
                 <hr />
-                <div className="mb-3" style={{ width: '165px' }}>
-                    <select id="flightNoSelect" className="form-select" value={selectedFlightNo} onChange={handleFlightNoChange}>
-                        <option value="">Select Flight No</option>
-                        <option value="All">All</option>
-                        {Object.keys(groupedData).map(flightNo => (
-                            <option key={flightNo} value={flightNo}>{flightNo}</option>
-                        ))}
-                    </select>
+                <div className='d-flex'>
+                    <div className="mb-3" style={{ width: '175px' }}>
+                        <select id="flightNoSelect" className="form-select" value={selectedFlightNo} onChange={handleFlightNoChange}>
+                            <option value="All">All Selected Flight No</option>
+                            {Object.keys(groupedData).map(flightNo => (
+                                <option key={flightNo} value={flightNo}>{flightNo}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="mb-3 ms-2" style={{ width: '165px' }}>
+                        <select id="boardingStatusSelect" className="form-select" value={selectedBoardingStatus} onChange={handleBoardingStatusChange}>
+                            <option value="">Select Boarding Status</option>
+                            <option value="Boarded">Boarded</option>
+                            <option value="NotBoarded">Not Boarded</option>
+                        </select>
+                    </div>
                 </div>
                 <div className='table-responsive'>
                     <table className="table table-striped mt-4 d-none d-md-table" style={{ width: '100%' }}>
@@ -291,8 +304,8 @@ const HomeComponent = () => {
                                         />
                                     </td>
                                     <td>{item.GuestId}</td>
-                                    <td>{item.Name}<br /><a href={`tel:${item.Phone}`} style={{ textDecoration: 'none', color: 'blue' }}>
-                                        {item.Phone}8869854199</a></td>
+                                    <td>{item.Name}<br /><a href={`tel:${item.PhoneNumber}`} style={{ textDecoration: 'none', color: 'blue' }}>
+                                        {item.PhoneNumber}</a></td>
                                     <td>{item.FlightNo}</td>
                                     <td >
                                         <div className='d-flex justify-content-center  align-item-center'>
@@ -302,7 +315,6 @@ const HomeComponent = () => {
                                                 onChange={() => handleCheckboxChange(item.IDDetID, 'Boarded')}
                                             />
                                         </div>
-
                                     </td>
                                     <td>
                                         <input
@@ -357,8 +369,8 @@ const HomeComponent = () => {
                                         <p className="card-text">PAX NO: {item.PaxNo}</p>
                                         <p className="card-text">
                                             Phone:&nbsp;
-                                            <a href={`tel:${item.Phone}`} className="phone-number">
-                                                {item.Phone}8077664702
+                                            <a href={`tel:${item.PhoneNumber}`} className="phone-number">
+                                                {item.PhoneNumber}
                                             </a>
                                         </p>
                                     </div>
@@ -416,12 +428,9 @@ const HomeComponent = () => {
                                 </div>
                             </div>
                         </div>
-
                     ))}
                 </div>
             </main>
-
-
         </>
     );
 }

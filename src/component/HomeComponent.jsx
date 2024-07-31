@@ -261,7 +261,8 @@ const HomeComponent = () => {
                 <div className='d-flex'>
                     <div className="mb-3" style={{ width: '175px' }}>
                         <select id="flightNoSelect" className="form-select" value={selectedFlightNo} onChange={handleFlightNoChange}>
-                            <option value="All">All Selected Flight No</option>
+                            <option value="">Select Flight No</option>
+                            <option value="All">All</option>
                             {Object.keys(groupedData).map(flightNo => (
                                 <option key={flightNo} value={flightNo}>{flightNo}</option>
                             ))}

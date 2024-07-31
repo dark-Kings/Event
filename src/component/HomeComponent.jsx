@@ -267,15 +267,15 @@ const HomeComponent = () => {
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th className='text-nowrap'>Photo</th>
-                                <th className='text-nowrap'>Guest ID</th>
-                                <th style={{ width: '25%' }}>Name</th>
-                                <th className='text-nowrap'>Flight No</th>
-                                <th>Board.</th>
-                                <th className='text-nowrap' style={{ width: '15%' }}>Room No</th>
-                                <th className='text-nowrap'>C.In</th>
-                                <th className='text-nowrap'>C.Out</th>
-                                <th className='text-nowrap'>PAX</th>
+                                <th className=''>Photo</th>
+                                <th className=''>Guest ID</th>
+                                <th >Name</th>
+                                <th className=''>Flight No</th>
+                                <th>Board</th>
+                                <th className='' style={{ width: '15%' }}>Room No</th>
+                                <th className=''>Check In</th>
+                                <th className=''>Check Out</th>
+                                <th className=''>PAX</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -294,12 +294,15 @@ const HomeComponent = () => {
                                     <td>{item.Name}<br /><a href={`tel:${item.Phone}`} style={{ textDecoration: 'none', color: 'blue' }}>
                                         {item.Phone}8869854199</a></td>
                                     <td>{item.FlightNo}</td>
-                                    <td>
-                                        <input
-                                            type="checkbox"
-                                            checked={item.Boarded === 1}
-                                            onChange={() => handleCheckboxChange(item.IDDetID, 'Boarded')}
-                                        />
+                                    <td >
+                                        <div className='d-flex justify-content-center  align-item-center'>
+                                            <input
+                                                type="checkbox"
+                                                checked={item.Boarded === 1}
+                                                onChange={() => handleCheckboxChange(item.IDDetID, 'Boarded')}
+                                            />
+                                        </div>
+
                                     </td>
                                     <td>
                                         <input
@@ -311,18 +314,22 @@ const HomeComponent = () => {
                                         />
                                     </td>
                                     <td>
-                                        <input
-                                            type="checkbox"
-                                            checked={item.CheckIN === 1}
-                                            onChange={() => handleCheckboxChange(item.IDDetID, 'CheckIN')}
-                                        />
+                                        <div className='d-flex justify-content-center  align-item-center'>
+                                            <input
+                                                type="checkbox"
+                                                checked={item.CheckIN === 1}
+                                                onChange={() => handleCheckboxChange(item.IDDetID, 'CheckIN')}
+                                            />
+                                        </div>
                                     </td>
                                     <td>
-                                        <input
-                                            type="checkbox"
-                                            checked={item.CheckOut === 1}
-                                            onChange={() => handleCheckboxChange(item.IDDetID, 'CheckOut')}
-                                        />
+                                        <div className='d-flex justify-content-center  align-item-center'>
+                                            <input
+                                                type="checkbox"
+                                                checked={item.CheckOut === 1}
+                                                onChange={() => handleCheckboxChange(item.IDDetID, 'CheckOut')}
+                                            />
+                                        </div>
                                     </td>
                                     <td>{item.PaxNo}</td>
                                 </tr>

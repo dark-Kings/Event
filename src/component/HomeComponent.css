@@ -2,9 +2,27 @@
     .custom-style {
         flex-direction: column;
     }
+
+    .custom-table {
+        width: 100%;
+    }
+
+
 }
 
-@media (max-width: 299px) {
+@media (min-width: 889px) {
+    .custom-table {
+        width: 60%;
+    }
+}
+
+@media (max-width: 585px) {
+    .custom-summarry {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 360px) {
     .custom-cardStyle {
         flex-direction: column;
     }

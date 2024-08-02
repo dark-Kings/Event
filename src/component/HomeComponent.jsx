@@ -127,7 +127,7 @@ const HomeComponent = () => {
             FieldName: field,
             FieldValue: `${updatedItem[field]}`
         }];
-        const message = field === 'Boarded' ? `ID: ${updatedItem["GuestId"]} Boarded` : field === 'CheckIN' ? `ID: ${updatedItem["GuestId"]} Check-In Completed` : `ID: ${updatedItem["GuestId"]} Check-Out Completed`;
+        const message = field === 'Boarded' ? `ID: ${updatedItem["GuestId"]} Boarded` : field === 'CheckIN' ? `ID: ${updatedItem["GuestId"]} Check-In Completed` : field === 'CheckOut' ? `ID: ${updatedItem["GuestId"]} Check-Out Completed` : `ID: ${updatedItem["GuestId"]} Gifted`;
         updateData(serverData, message);
     };
 
@@ -201,6 +201,8 @@ const HomeComponent = () => {
     const totalCheckOut = data.filter(item => item.CheckOut === 1).length;
     const totalGotHotel = data.filter(item => item.RoomNo).length;
     const totalNotGotHotel = data.length - totalGotHotel;
+    const gifted = data.filter(item => item.Gift === 1).length;
+    const notGifted = data.filter(item => item.Gift === 0).length;
 
     // Calculate the total unique room count
     const roomNumbers = data.map(item => item.RoomNo.trim().replace(/\s+/g, '')); // Trim and replace multiple spaces with a single space
@@ -221,7 +223,7 @@ const HomeComponent = () => {
             <main className="container-lg mt-1">
                 <img src={imageStrip} alt="Image Strip" className="img-fluid" />
                 <div className='d-flex justify-content-around align-items-center custom-style' style={{ width: '100%' }}>
-                    <div className='table-responsive w-100'>
+                    <div className='table-responsive custom-table ' >
                         <table className="table table-striped mt-4 " style={{ width: '100%' }}>
                             <thead>
                                 <tr>
@@ -244,16 +246,24 @@ const HomeComponent = () => {
                         </table>
                     </div>
                     <div className="mt-4 d-flex justify-content-around w-100 custom-cardStyle" style={{ marginLeft: '10px' }}>
-                        <div>
-                            <p><strong>Check-ins &nbsp;&nbsp;&nbsp;:</strong> <strong>{totalCheckIn}</strong></p>
-                            <p><strong>Check-outs&nbsp;:</strong> <strong>{totalCheckOut}</strong></p>
+                        <div className='d-flex justify-content-around w-100 custom-summarry'>
+                            <div>
+                                <p><strong>Check-ins &nbsp;&nbsp;&nbsp;:</strong> <strong>{totalCheckIn}</strong></p>
+                                <p><strong>Check-outs&nbsp;:</strong> <strong>{totalCheckOut}</strong></p>
+                            </div>
+                            <div>
+                                <p><strong>Hotel Allotted&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong> <strong>{totalGotHotel}</strong></p>
+                                <p><strong>Hotel Unallotted&nbsp;:</strong> <strong>{totalNotGotHotel}</strong></p>
+                            </div>
                         </div>
-                        <div>
-                            <p><strong>Hotel Allotted&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong> <strong>{totalGotHotel}</strong></p>
-                            <p><strong>Hotel Unallotted&nbsp;:</strong> <strong>{totalNotGotHotel}</strong></p>
-                        </div>
-                        <div>
-                            <p><strong>Room Allotted&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong> <strong>{totalRoom}</strong></p>
+                        <div className='d-flex justify-content-around w-100 custom-summarry'>
+                            <div>
+                                <p><strong>Gifted&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong> <strong>{gifted}</strong></p>
+                                <p><strong>Notgifted&nbsp;:</strong> <strong>{notGifted}</strong></p>
+                            </div>
+                            <div>
+                                <p><strong>Room Allotted&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong> <strong>{totalRoom}</strong></p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -286,9 +296,10 @@ const HomeComponent = () => {
                                 <th >Name</th>
                                 <th className=''>Flight No</th>
                                 <th>Board</th>
-                                <th className='' style={{ width: '15%' }}>Room No</th>
+                                <th className='' style={{ width: '10%' }}>Room No</th>
                                 <th className=''>Check In</th>
                                 <th className=''>Check Out</th>
+                                <th className=''>Gift</th>
                                 <th className=''>PAX</th>
                             </tr>
                         </thead>
@@ -300,7 +311,7 @@ const HomeComponent = () => {
                                         <img
                                             src={getImageSrc(item.Picture)}
                                             alt="User Photo"
-                                            style={{ width: '90px', height: '90px' }}
+                                            style={{ width: '80px', height: '80px' }}
                                             onError={(e) => { e.target.src = user; }} // Set the default image on error
                                         />
                                     </td>
@@ -341,6 +352,15 @@ const HomeComponent = () => {
                                                 type="checkbox"
                                                 checked={item.CheckOut === 1}
                                                 onChange={() => handleCheckboxChange(item.IDDetID, 'CheckOut')}
+                                            />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div className='d-flex justify-content-center  align-item-center'>
+                                            <input
+                                                type="checkbox"
+                                                checked={item.Gift === 1}
+                                                onChange={() => handleCheckboxChange(item.IDDetID, 'Gift')}
                                             />
                                         </div>
                                     </td>
@@ -423,6 +443,18 @@ const HomeComponent = () => {
                                                     onChange={() => handleCheckboxChange(item.IDDetID, 'CheckOut')}
                                                 />
                                                 <label className="form-check-label" htmlFor={`checkOut${item.IDDetID}`}>Check Out</label>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-6 mb-3">
+                                            <div className="form-check">
+                                                <input
+                                                    className="form-check-input"
+                                                    type="checkbox"
+                                                    id={`Gift${item.IDDetID}`}
+                                                    checked={item.Gift === 1}
+                                                    onChange={() => handleCheckboxChange(item.IDDetID, 'Gift')}
+                                                />
+                                                <label className="form-check-label" htmlFor={`Gift${item.IDDetID}`}>Gift</label>
                                             </div>
                                         </div>
                                     </div>

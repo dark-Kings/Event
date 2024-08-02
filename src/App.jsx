@@ -3,6 +3,7 @@ import './App.css';
 import HomeComponent from './component/HomeComponent';
 import Login from './component/Login';
 import Footer from './component/Footer';
+import Error from './component/Error';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/home" element={<HomeComponent />} />
+            <Route path='*' element={<Error />} />
 
           </Routes>
 
